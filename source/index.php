@@ -111,9 +111,9 @@ if(isset($ses_login)){
 			}
 			} elseif($menu==2){
 				sortuj();
-				menu2();
+				books();
 			} elseif($menu==3){
-				menu3();
+				users();
 				  
 			} 
 		}

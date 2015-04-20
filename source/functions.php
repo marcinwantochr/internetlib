@@ -53,7 +53,7 @@ function menu(){
 	}
 }
 
-function menu2(){
+function books(){
 	print '<form action="?menu=2" method="post">';
 	print '<input name="autor" type="text" value="Autor" onclick=this.value="" /><br />';
 	print '<input name="tytul" type="text" value="Tytuł" onclick=this.value="" /><br />';
@@ -91,7 +91,7 @@ function menu2(){
 	
 }
 
-function menu3(){
+function users(){
 	$sql_user = "SELECT * FROM `user` ORDER BY `id` ASC";
 	$sql_user = mysql_query($sql_user);
 	global $menu;
@@ -103,7 +103,13 @@ function menu3(){
 	  print "<td>".$row["name"]."</td>";
 	  print "<td>".$row["sname"]."</td>";
 	  print "<td><input size='1' type='text' name='perm' value='".$row["permission"]."' /><input type='submit' name='permsubmit' value='Zastosuj'/></td>";
-	  print "</form></tr>";
+	  print "<td>";
+	  $sql_user_books = "SELECT * FROM `books` WHERE `user_id`='1';";
+	  $sql_user_books = mysql_query($sql_user_books);
+	  while ($row_user_books = mysql_fetch_assoc($sql_user_books)) {
+		  print $row_user_books["tytul"].",";
+	  }
+	  print "</td></form></tr>";
 	  if($_POST['permsubmit']){
 		  $sql_perm="UPDATE `biblioteka`.`user` SET `permission` = '".$_POST['perm']."' WHERE `user`.`id` =  '".$_POST['id']."';";
 		  mysql_query($sql_perm);
