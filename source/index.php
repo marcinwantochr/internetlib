@@ -25,7 +25,6 @@ $permission = $_SESSION['permission'];
 $menu = $_GET['menu'];
 
 
-
 require_once('config.php');
 require_once('functions.php');
 
@@ -54,7 +53,7 @@ if(isset($ses_login)){
 			if($menu==1){
 				sortuj();
 				$querysort = mysql_query($sqlsort);
-				print "<table border='1'><tr><td><a href='?menu=1&sortby=id&sorttype=".$sort."'>ID</a></td><td><a href='?menu=1&sortby=autor&sorttype=".$sort."'>Autor</a></td><td><a href='?menu=1&sortby=tytul&sorttype=".$sort."'>Tytuł</a></td><td>STAN</td><td>WYPOŻYCZ</td>";
+				print "<table border='1'><tr><td><a href='?menu=1&Get_SortBy=id&Get_SortUpDown=".$sort."'>ID</a></td><td><a href='?menu=1&Get_SortBy=autor&Get_SortUpDown=".$sort."'>Autor</a></td><td><a href='?menu=1&sortby=tytul&Get_SortUpDown=".$sort."'>Tytuł</a></td><td>STAN</td><td>WYPOŻYCZ</td>";
 				if($permission<1){
 					print "<td>UŻYTKOWNIK</td></tr>";
 				}
@@ -64,7 +63,7 @@ if(isset($ses_login)){
     		    print "<td>".$row["tytul"]."</td>";
 				$result = mysql_query("SELECT `user_id` FROM `books` WHERE `user_id` = '".$ses_user_id."'");
 				$num_rows = mysql_num_rows($result);
-				if($num_rows<3 || $permission<=1){
+				if($num_rows<$maxBooks || $permission<=1){
 					if($row['stan']==1 ){
 						print '<td><font color="#33FF00">dostępna</font></td>';
 						print '<td><a href=?menu='.$_GET["menu"].'&wypozycz='.$row["id"].'>WYPOŻYCZ</a></td>';
@@ -159,6 +158,6 @@ if(isset($submit)){
 
 
 ?>
-
+x
 </body>
 </html>
