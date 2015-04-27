@@ -1,0 +1,35 @@
+/* CSS Document */
+
+html, body {
+	background-color: #fff;
+	color: #000;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+}
+#container {
+	margin: 0 auto;
+	width:1000px;
+	text-align:center;
+}
+#logo {
+	float:left;
+	width: 1000px;
+	height:112px;
+	text-align: left;
+}
+#menuLeft {
+	float:left;
+	width: 150px;
+	text-align: left;
+}
+#menuTop {
+	float:left;
+	width:850px;
+	text-align:center;
+}
+#tabela {
+	float:left;
+	text-align:left;
+	width:800px;
+}

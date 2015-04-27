@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="style.css">
 <title>Biblioteka</title>
 </head>
 
@@ -29,18 +30,28 @@ require_once('config.php');
 require_once('functions.php');
 
 connect_db();
-
-
-
-
-
-
-print "<table><tr>";
+?>
+<div id="container">
+<div id="logo">
+	<img src="img/main_03.jpg" />
+</div>
+<div id="menuLeft">
+<?
 if(isset($ses_login)){
-	print "<td align='left' valign='top'>";
+	print "";
+	print '<a href="?logout=1">Wyloguj</a> '.$ses_login.'<br/>';
 	menu();
-	print "</td>";
+	print "";
+} else {
+	login();
 }
+?>
+</div>
+<div id="menuTop">
+Informacje                   Kontakt          ITP
+</div>
+<div id="tabela">
+<?
 if(isset($ses_login)){
 	
 		
@@ -48,7 +59,7 @@ if(isset($ses_login)){
 		$query = mysql_query($sql);
 		$ile_wynikow = mysql_num_rows($query);
 		if($ile_wynikow>0){
-			print '<a href="?logout=1">Wyloguj</a> '.$ses_login;;
+			//print '<a href="?logout=1">Wyloguj</a> '.$ses_login;;
 			print "<td>";
 			if($menu==1){
 				sortuj();
@@ -116,18 +127,25 @@ if(isset($ses_login)){
 				  
 			} 
 		}
+} else {
+	Katalog();
 }
 
-
+?>
+</div>
+<?
 
 print "</td></tr></table>";
+/*
 if(!isset($ses_login)){
-	print "<table><tr>";
+	print "<div id='menuLeft'>";
 	login(); 	//Jeśli niezalogowany to wyświetl formularz
-	
+	print "</div>";
+	print "<div id='tabela'>";
 	Katalog(); //Oraz listę książek
 	print "</td></tr></table>";
-}
+	print "</div>";
+}*/
 
 wyloguj();
 
@@ -158,6 +176,6 @@ if(isset($submit)){
 
 
 ?>
-
+</div>
 </body>
 </html>
