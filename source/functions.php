@@ -11,7 +11,7 @@ function login(){
 		print "</td>";
 }
 
-function listaKsiazek(){
+function Katalog(){
 				sortuj();
 				global $sqlsort;
 				global $sort;
@@ -44,12 +44,12 @@ function wyloguj(){
 	}
 }
 function menu(){
-	print "<a href='?menu=1'> LISTA</a><br />";
+	print "<a href='?menu=1'> Katalog</a><br />";
 	if($_SESSION['permission']<=1){
-	print "<a href='?menu=2'> DODAJ</a><br />";
+	print "<a href='?menu=2'> Dodaj książkę</a><br />";
 	}
 	if($_SESSION['permission']==0){
-	print "<a href='?menu=3'> UŻYTKOWNICY</a><br />";
+	print "<a href='?menu=3'> Użytkownicy</a><br />";
 	}
 }
 

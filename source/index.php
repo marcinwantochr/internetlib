@@ -94,13 +94,13 @@ if(isset($ses_login)){
 							
 						}
 					}	
-				} else {
+				} else { //Informacja o przekroczonej ilości wypożyczonych książek
 					if($row['stan']==1 ){
 			        	print '<td><font color="#33FF00">dostępna</font></td>';
-						print "<td>Wypożyczyłeś za dużo</td>";
+						print "<td>".$maxBooksInfo."</td>";
 					} else {
 						print '<td><font color="#FF0000">niedostępna</font></td>';
-						print "<td>Wypożyczyłeś za dużo</td>";
+						print "<td>".$maxBooksInfo."</td>";
 					}
 				}
 		
@@ -125,7 +125,7 @@ if(!isset($ses_login)){
 	print "<table><tr>";
 	login(); 	//Jeśli niezalogowany to wyświetl formularz
 	
-	listaKsiazek();
+	Katalog(); //Oraz listę książek
 	print "</td></tr></table>";
 }
 
@@ -151,13 +151,13 @@ if(isset($submit)){
 		$_SESSION['sort'] = 1;
 		header("Location: index.php?menu=".$_GET['menu']);
 	} else {
-		print "Złe hasło lub login";
+		print $BadPass;
 	}
 }
 
 
 
 ?>
-x
+
 </body>
 </html>
