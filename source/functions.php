@@ -7,6 +7,7 @@ function login(){
 		print '<input name="password" type="password" value="xxx" onclick=this.value="" /><br />';
 		print '<input name="submit" type="submit" value="Loguj"/>';
 		print '</form>';
+		print $_SESSION['permission'];
 		print "</td>";
 }
 
@@ -21,9 +22,9 @@ function Katalog(){
 				  print "<td>".$row["autor"]."</td>";
 				  print "<td>".$row["tytul"]."</td>";
 				  if($row['stan']==1 ){
-					  print '<td><font color="#33FF00">dostępna</font></td>';
+					  print '<td><img src="img/kropka_zielona.png" /></td>';
 				  } else {
-					  print '<td><font color="#FF0000">niedostępna</font></td>';
+					  print '<td><img src="img/kropka.png" /></td>';
 				  }	
 				  print "</tr>";
 				}
@@ -43,12 +44,12 @@ function wyloguj(){
 	}
 }
 function menu(){
-	print "<a href='?menu=1'> Katalog</a><br />";
+	print "<a href='?menu=1'> <img src='img/katalog.png' /></a>";
 	if($_SESSION['permission']<=1){
-	print "<a href='?menu=2'> Dodaj książkę</a><br />";
+	print "<a href='?menu=2'> <img src='img/dodaj2.png' /></a>";
 	}
 	if($_SESSION['permission']==0){
-	print "<a href='?menu=3'> Użytkownicy</a><br />";
+	print "<a href='?menu=3'> <img src='img/uzytkownicy.png' /></a>";
 	}
 }
 

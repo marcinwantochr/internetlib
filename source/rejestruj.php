@@ -2,10 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style.css">
 <title>Rejestracja</title>
 </head>
 
 <body>
+
+<div id="rejestruj">
 <table>
 <form action="" method="post">
 <tr><td>Login:</td><td><input type="text" name="login" /></td></tr>
@@ -15,6 +18,8 @@
 <tr><td></td><td><input type="submit" name="submit" value="Rejestruj" /></td></tr>
 </form>
 </table>
+
+
 <?
 require_once('config.php');
 require_once('functions.php');
@@ -34,5 +39,6 @@ if($_POST['submit'] && $_POST['login']!="" && $_POST['password']!="" && $_POST['
 	print "Wypełnij wszystkie pola";
 }
 ?>
+</div>
 </body>
 </html>

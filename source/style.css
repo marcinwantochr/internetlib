@@ -2,7 +2,7 @@
 
 
 html, body {
-	background-color: #fff;
+	background-color: #8f8f88;
 	color: #000;
 	margin: 0;
 	padding: 0;
@@ -16,13 +16,15 @@ html, body {
 #logo {
 	float:left;
 	width: 1000px;
-	height:112px;
+	height:150px;
 	text-align: left;
 }
 #menuLeft {
 	float:left;
 	width: 150px;
 	text-align: left;
+	border-bottom:thick;
+	border-bottom-color:#0F0;
 }
 #menuTop {
 	float:left;
@@ -33,4 +35,9 @@ html, body {
 	float:left;
 	text-align:left;
 	width:800px;
+}
+#rejestruj {
+	margin: 0 auto;
+	text-align:left;
+	width:500px;
 }

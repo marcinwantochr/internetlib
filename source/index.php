@@ -33,87 +33,103 @@ connect_db();
 ?>
 <div id="container">
 <div id="logo">
-	<img src="img/main_03.jpg" />
+	<img src="img/logo.png" />
 </div>
 <div id="menuLeft">
 <?
 if(isset($ses_login)){
-	print "";
-	print '<a href="?logout=1">Wyloguj</a> '.$ses_login.'<br/>';
+	print "Zalogowany jako: ".$ses_login;
+	print '<a href="?logout=1"><img src="img/wyloguj2.png"/></a>';
 	menu();
-	print "";
 } else {
 	login();
 }
 ?>
 </div>
 <div id="menuTop">
-Informacje                   Kontakt          ITP
+<img src="img/informacje.png" /> <img src="img/kontakt.png" />
 </div>
 <div id="tabela">
 <?
 if(isset($ses_login)){
-	
-		
 		$sql = "SELECT * FROM `user` WHERE `login` = '".$ses_login."' AND `password` = '".$ses_password."'";
 		$query = mysql_query($sql);
 		$ile_wynikow = mysql_num_rows($query);
-		if($ile_wynikow>0){
+} else {
+	$permission = 4;
+}
+/*		if($ile_wynikow>0){
 			//print '<a href="?logout=1">Wyloguj</a> '.$ses_login;;
-			print "<td>";
-			if($menu==1){
+*/			print "<td>";
+			if($menu==1 or $menu==""){
 				sortuj();
 				$querysort = mysql_query($sqlsort);
-				print "<table border='1'><tr><td><a href='?menu=1&Get_SortBy=id&Get_SortUpDown=".$sort."'>ID</a></td><td><a href='?menu=1&Get_SortBy=autor&Get_SortUpDown=".$sort."'>Autor</a></td><td><a href='?menu=1&sortby=tytul&Get_SortUpDown=".$sort."'>Tytuł</a></td><td>STAN</td><td>WYPOŻYCZ</td>";
-				if($permission<1){
-					print "<td>UŻYTKOWNIK</td></tr>";
+				print "<table border='1'><tr><td><a href='?menu=1&Get_SortBy=id&Get_SortUpDown=".$sort."'>ID</a></td><td><a href='?menu=1&Get_SortBy=autor&Get_SortUpDown=".$sort."'>Autor</a></td><td><a href='?menu=1&sortby=tytul&Get_SortUpDown=".$sort."'>Tytuł</a></td><td>Stan</td>";
+				if($permission<4){
+					print "<td>Wypożycz</td>";
+				}
+				if($permission<=1){
+					print "<td>Użytkownik</td></tr>";
 				}
     	    	while ($row = mysql_fetch_assoc($querysort)) {
     		    print "<tr><td>".$row["id"]."</td>";
 				print "<td>".$row["autor"]."</td>";
     		    print "<td>".$row["tytul"]."</td>";
-				$result = mysql_query("SELECT `user_id` FROM `books` WHERE `user_id` = '".$ses_user_id."'");
-				$num_rows = mysql_num_rows($result);
-				if($num_rows<$maxBooks || $permission<=1){
-					if($row['stan']==1 ){
-						print '<td><font color="#33FF00">dostępna</font></td>';
-						print '<td><a href=?menu='.$_GET["menu"].'&wypozycz='.$row["id"].'>WYPOŻYCZ</a></td>';
-						
-					} else {
-						print '<td><font color="#FF0000">niedostępna</font></td>';
-						if($permission>1){
-							$sql_user = "SELECT * FROM `user` WHERE `id` = ".$row['user_id'];
-							$query_user = mysql_query($sql_user);
-							$row_user = mysql_fetch_assoc($query_user);		
-							//print "<td>".$row_user["login"]."</td>";
-							if($row_user['login']==$ses_login){
-								print "<td><font color='#0000FF'>Posiadasz już <br> tę książkę</font></td>";
-							} else {
-								print '<td></td>';
+				
+
+					$result = mysql_query("SELECT `user_id` FROM `books` WHERE `user_id` = '".$ses_user_id."'");
+					$num_rows = mysql_num_rows($result);
+					//if ($num_rows<$maxBooks){
+						if($row['stan']==1 ){
+							print '<td><img src="img/kropka_zielona.png" /></td>';
+							if ($permission<4){
+								if ($num_rows<$maxBooks || $permission<=1){
+									print '<td><a href=?menu='.$_GET["menu"].'&wypozycz='.$row["id"].'>WYPOŻYCZ</a></td>';
+								} else {
+										print '<td>'.$maxBooksInfo.'</td>';
+								}
 							}
 						} else {
-							$sql_user = "SELECT * FROM `user` WHERE `id` = ".$row['user_id'];
-							$query_user = mysql_query($sql_user);
-							$row_user = mysql_fetch_assoc($query_user);		
-							print "<td><a href='?menu=".$_GET['menu']."&stanreset=".$row['id']."'>NIEDOSTĘPNE</a></td>";
-							print "<td>".$row_user["login"]."</td>";
-							if($_GET['stanreset']){
-							$sql = "UPDATE `biblioteka`.`books` SET `stan` = '1', `user_id` = '' WHERE `books`.`id` = '".$_GET['stanreset']."';";
-							mysql_query($sql);
-							header("Location: index.php?menu=".$_GET['menu']);
+							print '<td><img src="img/kropka.png" /></td>';
+							if($permission>1){
+								$sql_user = "SELECT * FROM `user` WHERE `id` = ".$row['user_id'];
+								$query_user = mysql_query($sql_user);
+								$row_user = mysql_fetch_assoc($query_user);		
+								//print "<td>".$row_user["login"]."</td>";
+								if ($permission<4){
+									if ($num_rows<$maxBooks){
+										if($row_user['login']==$ses_login){
+											print "<td><font color='#0000FF'>Posiadasz już <br> tę książkę</font></td>";
+										} else {
+											print '<td></td>';
+										}
+									} else {
+										print '<td>'.$maxBooksInfo.'</td>';
+									}
+								}
+							} else { //Sekcja Wypożycz dla admina 
+								$sql_user = "SELECT * FROM `user` WHERE `id` = ".$row['user_id'];
+								$query_user = mysql_query($sql_user);
+								$row_user = mysql_fetch_assoc($query_user);		
+								print "<td><a href='?menu=".$_GET['menu']."&stanreset=".$row['id']."'>NIEDOSTĘPNE</a></td>";
+								print "<td>".$row_user["login"]."</td>";
+								if($_GET['stanreset']){
+								$sql = "UPDATE `biblioteka`.`books` SET `stan` = '1', `user_id` = '' WHERE `books`.`id` = '".$_GET['stanreset']."';";
+								mysql_query($sql);
+								header("Location: index.php?menu=".$_GET['menu']);
 						}
 							
 						}
 					}	
-				} else { //Informacja o przekroczonej ilości wypożyczonych książek
+				 /*else { //Informacja o przekroczonej ilości wypożyczonych książek
 					if($row['stan']==1 ){
-			        	print '<td><font color="#33FF00">dostępna</font></td>';
+			        	print '<td><img src="img/kropka_zielona.png" /></td>';
 						print "<td>".$maxBooksInfo."</td>";
 					} else {
-						print '<td><font color="#FF0000">niedostępna</font></td>';
+						print '<td><font color="#FF0000"><img src="img/kropka.png" /></font></td>';
 						print "<td>".$maxBooksInfo."</td>";
 					}
-				}
+				}*/
 		
 				
 				print "</tr>";
@@ -126,10 +142,10 @@ if(isset($ses_login)){
 				users();
 				  
 			} 
-		}
+/*		}
 } else {
 	Katalog();
-}
+}*/
 
 ?>
 </div>
