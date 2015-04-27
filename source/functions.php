@@ -1,5 +1,4 @@
 <?
-
 function login(){
 		print "<td align='left' valign='top'>";
 		print "Zaloguj się lub <a href='rejestruj.php'>zarejestruj</a>";

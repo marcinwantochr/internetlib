@@ -173,9 +173,8 @@ if(isset($submit)){
 	}
 }
 
-
-
 ?>
+
 </div>
 </body>
 </html>
