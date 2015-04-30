@@ -14,6 +14,7 @@ html, body {
 	text-align:center;
 }
 #logo {
+	background-image:url('img/logo.png');
 	float:left;
 	width: 1000px;
 	height:150px;
@@ -37,7 +38,17 @@ html, body {
 	width:800px;
 }
 #rejestruj {
-	margin: 0 auto;
+	margin-left: auto; 
+	margin-right: auto;
+	float:left;
 	text-align:left;
-	width:500px;
+	width:1000px;
+}
+.tabela {
+	text-align:left;
+	margin:0 auto;
+}
+.menuTop {
+	float:left;
+	text-align:left;
 }

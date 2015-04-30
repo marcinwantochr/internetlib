@@ -30,11 +30,11 @@ require_once('config.php');
 require_once('functions.php');
 
 connect_db();
+
 ?>
 <div id="container">
-<div id="logo">
-	<img src="img/logo.png" />
-</div>
+<a href="index.php"><div id="logo">
+</div></a>
 <div id="menuLeft">
 <?
 if(isset($ses_login)){
@@ -47,7 +47,7 @@ if(isset($ses_login)){
 ?>
 </div>
 <div id="menuTop">
-<img src="img/informacje.png" /> <img src="img/kontakt.png" />
+<img class="menuTop" src="img/informacje.png" /> <img class="menuTop" src="img/kontakt.png" /> <form class="menuTop" method="get"> <input type="text" name="s" /></form>
 </div>
 <div id="tabela">
 <?
@@ -58,13 +58,28 @@ if(isset($ses_login)){
 } else {
 	$permission = 4;
 }
+/*if(isset($searchWord)){
+	$menu=4;
+}*/
 /*		if($ile_wynikow>0){
 			//print '<a href="?logout=1">Wyloguj</a> '.$ses_login;;
 */			print "<td>";
 			if($menu==1 or $menu==""){
 				sortuj();
 				$querysort = mysql_query($sqlsort);
-				print "<table border='1'><tr><td><a href='?menu=1&Get_SortBy=id&Get_SortUpDown=".$sort."'>ID</a></td><td><a href='?menu=1&Get_SortBy=autor&Get_SortUpDown=".$sort."'>Autor</a></td><td><a href='?menu=1&sortby=tytul&Get_SortUpDown=".$sort."'>Tytuł</a></td><td>Stan</td>";
+				print "<table border='1'><tr><td><a href='?menu=1&Get_SortBy=id&Get_SortUpDown=".$sort;
+				if(isset($_GET['s'])){
+					print "&s=". $_GET['s'];
+				}
+				print "'>ID</a></td><td><a href='?menu=1&Get_SortBy=autor&Get_SortUpDown=".$sort;
+				if(isset($_GET['s'])){
+					print "&s=". $_GET['s'];
+				}
+				print "'>Autor</a></td><td><a href='?menu=1&sortby=tytul&Get_SortUpDown=".$sort;
+				if(isset($_GET['s'])){
+					print "&s=". $_GET['s'];
+				} 
+				print "'>Tytuł</a></td><td>Stan</td>";
 				if($permission<4){
 					print "<td>Wypożycz</td>";
 				}
@@ -76,7 +91,7 @@ if(isset($ses_login)){
 				print "<td>".$row["autor"]."</td>";
     		    print "<td>".$row["tytul"]."</td>";
 				
-
+					
 					$result = mysql_query("SELECT `user_id` FROM `books` WHERE `user_id` = '".$ses_user_id."'");
 					$num_rows = mysql_num_rows($result);
 					//if ($num_rows<$maxBooks){
@@ -114,9 +129,9 @@ if(isset($ses_login)){
 								print "<td><a href='?menu=".$_GET['menu']."&stanreset=".$row['id']."'>NIEDOSTĘPNE</a></td>";
 								print "<td>".$row_user["login"]."</td>";
 								if($_GET['stanreset']){
-								$sql = "UPDATE `biblioteka`.`books` SET `stan` = '1', `user_id` = '' WHERE `books`.`id` = '".$_GET['stanreset']."';";
-								mysql_query($sql);
-								header("Location: index.php?menu=".$_GET['menu']);
+									$sql = "UPDATE `biblioteka`.`books` SET `stan` = '1', `user_id` = '' WHERE `books`.`id` = '".$_GET['stanreset']."';";
+									mysql_query($sql);
+									header("Location: index.php?menu=".$_GET['menu']);
 						}
 							
 						}
@@ -141,7 +156,19 @@ if(isset($ses_login)){
 			} elseif($menu==3){
 				users();
 				  
-			} 
+			} elseif($menu==4){ //wyszukiwarka
+				$sqlSearch  = "SELECT * FROM `books` WHERE `autor` LIKE '%".$searchWord."%' OR `tytul` LIKE '%".$searchWord."%'";
+				$sqlSearch = mysql_query($sqlSearch);
+				print "<table border='1'>";
+				while ($row = mysql_fetch_assoc($sqlSearch)) {
+					print "<tr><td>".$row["id"]."</td>";
+					print "<td>".$row["autor"]."</td>";
+					print "<td>".$row["tytul"]."</td>";
+					print "<td>".$row["stan"]."</td>";
+				}
+				print "</table>";
+				
+			}
 /*		}
 } else {
 	Katalog();

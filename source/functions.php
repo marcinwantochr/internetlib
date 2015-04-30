@@ -11,12 +11,18 @@ function login(){
 		print "</td>";
 }
 
-function Katalog(){
+function Katalog(){ // Chyba nieużywana...
+				global $searchWord;
+				$searchWord = $_GET['s'];
 				sortuj();
 				global $sqlsort;
 				global $sort;
 				$querysort = mysql_query($sqlsort);
-				print "<td align='left' valign='top'><table border='1'><tr><td><a href='?menu=1&Get_SortBy=id&Get_SortUpDown=".$sort."'>ID</a></td><td><a href='?menu=1&Get_SortBy=autor&Get_SortUpDown=".$sort."'>Autor</a></td><td><a href='?menu=1&Get_SortBy=tytul&Get_SortUpDown=".$sort."'>Tytuł</a></td><td>STAN</td>";
+				print "<td align='left' valign='top'><table border='1'><tr><td><a href='?menu=1&Get_SortBy=id&Get_SortUpDown=".$sort;
+				if(isset($_GET['s'])){
+					print "&s=". $_GET['s'];
+				}
+				print "'>ID</a></td><td><a href='?menu=1&Get_SortBy=autor&Get_SortUpDown=".$sort."'>Autor</a></td><td><a href='?menu=1&Get_SortBy=tytul&Get_SortUpDown=".$sort."'>Tytuł</a></td><td>STAN</td>";
     	    	while ($row = mysql_fetch_assoc($querysort)) {
 				  print "<tr><td>".$row["id"]."</td>";
 				  print "<td>".$row["autor"]."</td>";
@@ -124,31 +130,57 @@ function sortuj(){
 				global $sort;
 				global $Get_SortUpDown;
 				global $Get_SortBy;
+				global $searchWord;
 				$Get_SortBy = $_GET['Get_SortBy'];
 				$Get_SortUpDown = $_GET['Get_SortUpDown'];
+				$searchWord = $_GET['s'];
 				if($Get_SortBy=="tytul"){
 					if($Get_SortUpDown=="desc"){
 						$sort="asc";
-						$sqlsort = "SELECT * FROM `books` ORDER BY `tytul` ASC";
+						if(isset($searchWord)){
+							$sqlsort  = "SELECT * FROM `books` WHERE `autor` LIKE '%".$searchWord."%' OR `tytul` LIKE '%".$searchWord."%' ORDER BY `tytul` ASC";
+						} else {
+							$sqlsort = "SELECT * FROM `books` ORDER BY `tytul` ASC";
+						}
 					} else {
 						$sort="desc";
-						$sqlsort = "SELECT * FROM `books` ORDER BY `tytul` DESC";
+						if(isset($searchWord)){
+							$sqlsort  = "SELECT * FROM `books` WHERE `autor` LIKE '%".$searchWord."%' OR `tytul` LIKE '%".$searchWord."%' ORDER BY `tytul` DESC";
+						} else {
+							$sqlsort = "SELECT * FROM `books` ORDER BY `tytul` DESC";
+						}
 					}
 				} elseif($Get_SortBy=="autor") {
 					if($Get_SortUpDown=="desc"){
 						$sort="asc";
-						$sqlsort = "SELECT * FROM `books` ORDER BY `autor` ASC";
+						if(isset($searchWord)){
+							$sqlsort  = "SELECT * FROM `books` WHERE `autor` LIKE '%".$searchWord."%' OR `tytul` LIKE '%".$searchWord."%' ORDER BY `autor` ASC";
+						} else {
+							$sqlsort = "SELECT * FROM `books` ORDER BY `autor` ASC";
+						}
 					} else {
 						$sort="desc";
-						$sqlsort = "SELECT * FROM `books` ORDER BY `autor` DESC";
+						if(isset($searchWord)){
+							$sqlsort  = "SELECT * FROM `books` WHERE `autor` LIKE '%".$searchWord."%' OR `tytul` LIKE '%".$searchWord."%' ORDER BY `autor` DESC";
+						} else {
+							$sqlsort = "SELECT * FROM `books` ORDER BY `autor` DESC";
+						}
 					}
 				} else {
 					if($Get_SortUpDown=="asc"){						
 						$sort="desc";
-						$sqlsort = "SELECT * FROM `books` ORDER BY `id` DESC";
+						if(isset($searchWord)){
+							$sqlsort  = "SELECT * FROM `books` WHERE `autor` LIKE '%".$searchWord."%' OR `tytul` LIKE '%".$searchWord."%' ORDER BY `id` DESC";
+						} else {
+							$sqlsort = "SELECT * FROM `books` ORDER BY `id` DESC";
+						}
 					} else {
 						$sort="asc";
-						$sqlsort = "SELECT * FROM `books` ORDER BY `id` ASC";
+						if(isset($searchWord)){
+							$sqlsort  = "SELECT * FROM `books` WHERE `autor` LIKE '%".$searchWord."%' OR `tytul` LIKE '%".$searchWord."%' ORDER BY `id` ASC";
+						} else {
+							$sqlsort = "SELECT * FROM `books` ORDER BY `id` ASC";
+						}
 					}
 				} 
 				return $sqlsort;

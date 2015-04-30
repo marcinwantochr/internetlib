@@ -7,9 +7,10 @@
 </head>
 
 <body>
-
+<div id="container">
+<div id="logo"></div>
 <div id="rejestruj">
-<table>
+<table class="tabela">
 <form action="" method="post">
 <tr><td>Login:</td><td><input type="text" name="login" /></td></tr>
 <tr><td>Hasło:</td><td><input type="password" name="password" /></td></tr>
@@ -17,7 +18,7 @@
 <tr><td>Nazwisko:</td><td><input type="text" name="sname" /></td></tr>
 <tr><td></td><td><input type="submit" name="submit" value="Rejestruj" /></td></tr>
 </form>
-</table>
+
 
 
 <?
@@ -36,9 +37,11 @@ if($_POST['submit'] && $_POST['login']!="" && $_POST['password']!="" && $_POST['
 		print "Taki login już istnieje";
 	}
 } else {
-	print "Wypełnij wszystkie pola";
+	print "<tr><td>Wypełnij wszystkie pola</td></tr>";
 }
 ?>
+</table>
+</div>
 </div>
 </body>
 </html>
