@@ -100,6 +100,9 @@ if(isset($ses_login)){
 							if ($permission<4){
 								if ($num_rows<$maxBooks || $permission<=1){
 									print '<td><a href=?menu='.$_GET["menu"].'&wypozycz='.$row["id"].'>WYPOŻYCZ</a></td>';
+									if($permission<=1){
+										print "<td></td>";
+									}
 								} else {
 										print '<td>'.$maxBooksInfo.'</td>';
 								}
@@ -132,9 +135,9 @@ if(isset($ses_login)){
 									$sql = "UPDATE `biblioteka`.`books` SET `stan` = '1', `user_id` = '' WHERE `books`.`id` = '".$_GET['stanreset']."';";
 									mysql_query($sql);
 									header("Location: index.php?menu=".$_GET['menu']);
-						}
+								}
+							}
 							
-						}
 					}	
 				 /*else { //Informacja o przekroczonej ilości wypożyczonych książek
 					if($row['stan']==1 ){
