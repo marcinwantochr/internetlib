@@ -153,10 +153,10 @@ if(isset($ses_login)){
 				print "</tr>";
 				
 			}
-			} elseif($menu==2){
+			} elseif($menu==2 && $permission<2){
 				sortuj();
 				books();
-			} elseif($menu==3){
+			} elseif($menu==3 && $permission<2){
 				users();
 				  
 			} elseif($menu==4){ //wyszukiwarka
@@ -218,7 +218,7 @@ if(isset($submit)){
 		print $BadPass;
 	}
 }
-
+print $_SESSION['permission'];
 ?>
 
 </div>
