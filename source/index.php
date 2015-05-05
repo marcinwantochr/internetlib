@@ -39,7 +39,7 @@ connect_db();
 <?
 if(isset($ses_login)){
 	print "Zalogowany jako: ".$ses_login;
-	print '<a href="?logout=1"><img src="img/wyloguj2.png"/></a>';
+	print '<a href="?logout=1" class="menuLeftButtons"><img src="img/wyloguj2.png"/></a>';
 	menu();
 } else {
 	login();

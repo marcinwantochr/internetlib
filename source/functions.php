@@ -3,8 +3,8 @@ function login(){
 		print "<td align='left' valign='top'>";
 		print "Zaloguj się lub <a href='rejestruj.php'>zarejestruj</a>";
 		print '<form action="?menu=1" method="post">';
-		print '<input name="login" type="text" value="login" onclick=this.value="" /><br />';
-		print '<input name="password" type="password" value="xxx" onclick=this.value="" /><br />';
+		print '<input class="menuLeftButtons" name="login" type="text" value="login" onclick=this.value="" /><br />';
+		print '<input class="menuLeftButtons" name="password" type="password" value="xxx" onclick=this.value="" /><br />';
 		print '<input name="submit" type="submit" value="Loguj"/>';
 		print '</form>';
 		print $_SESSION['permission'];
@@ -50,12 +50,12 @@ function wyloguj(){
 	}
 }
 function menu(){
-	print "<a href='?menu=1'> <img src='img/katalog.png' /></a>";
+	print "<a href='?menu=1' class='menuLeftButtons'> <img src='img/katalog.png' /></a>";
 	if($_SESSION['permission']<=1){
-	print "<a href='?menu=2'> <img src='img/dodaj2.png' /></a>";
+	print "<a href='?menu=2' class='menuLeftButtons'> <img src='img/dodaj2.png' /></a>";
 	}
 	if($_SESSION['permission']==0){
-	print "<a href='?menu=3'> <img src='img/uzytkownicy.png' /></a>";
+	print "<a href='?menu=3' class='menuLeftButtons'> <img src='img/uzytkownicy.png' /></a>";
 	}
 }
 
