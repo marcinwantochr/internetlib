@@ -1,13 +1,13 @@
 <?
 function login(){
 		print "<td align='left' valign='top'>";
-		print "Zaloguj się lub <a href='rejestruj.php'>zarejestruj</a>";
+		
 		print '<form action="?menu=1" method="post">';
-		print '<input class="menuLeftButtons" name="login" type="text" value="login" onclick=this.value="" /><br />';
-		print '<input class="menuLeftButtons" name="password" type="password" value="xxx" onclick=this.value="" /><br />';
-		print '<input name="submit" type="submit" value="Loguj"/>';
+		print "Zaloguj się lub <a href='rejestruj.php'>zarejestruj</a>";
+		print '<input name="login" type="text" value="login" onclick=this.value="" />';
+		print '<input name="password" type="password" value="xxx" onclick=this.value="" />';
+		print '<input name="submit" type="hidden" />';
 		print '</form>';
-		print $_SESSION['permission'];
 		print "</td>";
 }
 
@@ -46,7 +46,7 @@ function connect_db(){
 function wyloguj(){
 	if($_GET['logout']==1){
 		session_destroy();
-		header("Location: index.php?menu=".$_GET['menu']);
+		header("Location: index.php?"); //menu=".$_GET['menu']);
 	}
 }
 function menu(){

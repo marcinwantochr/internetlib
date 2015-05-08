@@ -44,6 +44,7 @@ if(isset($ses_login)){
 } else {
 	login();
 }
+
 ?>
 </div>
 <div id="menuTop">
@@ -153,12 +154,19 @@ if(isset($ses_login)){
 				print "</tr>";
 				
 			}
-			} elseif($menu==2 && $permission<2){
-				sortuj();
-				books();
-			} elseif($menu==3 && $permission<2){
-				users();
-				  
+			} elseif($menu==2){
+				if($permission<2){
+					sortuj();
+					books();
+				} else {
+					print "Brak uprawnień";
+				}
+			} elseif($menu==3){
+				if($permission<2){
+					users();
+				} else {
+					print "Brak uprawnień";
+				}
 			} elseif($menu==4){ //wyszukiwarka
 				$sqlSearch  = "SELECT * FROM `books` WHERE `autor` LIKE '%".$searchWord."%' OR `tytul` LIKE '%".$searchWord."%'";
 				$sqlSearch = mysql_query($sqlSearch);

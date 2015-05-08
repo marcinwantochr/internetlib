@@ -29,13 +29,13 @@ html, body {
 }
 .menuLeftButtons {
 	float:left;
-	width:150px;
+	width:140px;
 	height:22px;
 }
 #menuTop {
 	float:left;
 	width:850px;
-	text-align:center;
+	text-align:left;
 }
 #tabela {
 	float:left;
