@@ -25,6 +25,7 @@
 require_once('config.php');
 require_once('functions.php');
 
+
 connect_db();
 if($_POST['submit'] && $_POST['login']!="" && $_POST['password']!="" && $_POST['name']!=""){
 	$result = mysql_query("SELECT `login` FROM `user` WHERE `login` = '".$_POST['login']."'");
