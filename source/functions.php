@@ -1,12 +1,12 @@
 <?
-function login(){
+function login(){ //wyświetlenie formularza logowania
 		print "<td align='left' valign='top'>";
 		
 		print '<form action="?menu=1" method="post">';
 		print "Zaloguj się lub <a href='rejestruj.php'>zarejestruj</a>";
 		print '<input name="login" type="text" value="login" onclick=this.value="" />';
 		print '<input name="password" type="password" value="xxx" onclick=this.value="" />';
-		print '<input name="submit" type="hidden" />';
+		print '<input name="submit" type="submit" />';
 		print '</form>';
 		print "</td>";
 }
@@ -37,19 +37,19 @@ function Katalog(){ // Chyba nieużywana...
 				print "</table>";
 }
 
-function connect_db(){
+function connect_db(){ //obsługa połączenia z bazą
 	mysql_connect(DB_HOST, DB_USER, DB_PASS) or die ("bład 1");
 	mysql_select_db(DB_DATABASE) or die ("bład 2");
 }
 
 
-function wyloguj(){
+function wyloguj(){ //funkcja wylogowywująca
 	if($_GET['logout']==1){
 		session_destroy();
 		header("Location: index.php?"); //menu=".$_GET['menu']);
 	}
 }
-function menu(){
+function menu(){ //funkcja wyświetla menu boczne
 	print "<a href='?menu=1' class='menuLeftButtons'> <img src='img/katalog.png' /></a>";
 	if($_SESSION['permission']<=1){
 	print "<a href='?menu=2' class='menuLeftButtons'> <img src='img/dodaj2.png' /></a>";
@@ -59,7 +59,7 @@ function menu(){
 	}
 }
 
-function books(){
+function books(){ //funkcja wyświetla książki oraz umożliwia dodanie/usunięcie nowej
 	print '<form action="?menu=2" method="post">';
 	print '<input name="autor" type="text" value="Autor" onclick=this.value="" /><br />';
 	print '<input name="tytul" type="text" value="Tytuł" onclick=this.value="" /><br />';
@@ -97,7 +97,7 @@ function books(){
 	
 }
 
-function users(){
+function users(){ //funkcja wyświetla użytkowników oraz pozwala na ich dodanie lub usuwanie oraz zmianę uprawnień
 	$sql_user = "SELECT * FROM `user` ORDER BY `id` ASC";
 	$sql_user = mysql_query($sql_user);
 	global $menu;
@@ -125,7 +125,7 @@ function users(){
 	print "</table>";
 }
 
-function sortuj(){
+function sortuj(){ //funkcja sortująca książki 
 				global $sqlsort;
 				global $sort;
 				global $Get_SortUpDown;

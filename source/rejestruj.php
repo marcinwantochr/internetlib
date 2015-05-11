@@ -11,6 +11,8 @@
 <div id="logo"></div>
 <div id="rejestruj">
 <table class="tabela">
+
+<!-- formularz rejestracji -->
 <form action="" method="post">
 <tr><td>Login:</td><td><input type="text" name="login" /></td></tr>
 <tr><td>Hasło:</td><td><input type="password" name="password" /></td></tr>
@@ -26,8 +28,8 @@ require_once('config.php');
 require_once('functions.php');
 
 
-connect_db();
-if($_POST['submit'] && $_POST['login']!="" && $_POST['password']!="" && $_POST['name']!=""){
+connect_db(); //wywołanie połączenia z bazą
+if($_POST['submit'] && $_POST['login']!="" && $_POST['password']!="" && $_POST['name']!=""){ //jeśli formularz został wysłany to dodaje użytkownika do bazy i wyświetla komunikat
 	$result = mysql_query("SELECT `login` FROM `user` WHERE `login` = '".$_POST['login']."'");
 	$num_rows = mysql_num_rows($result);
 	if($num_rows==0){

@@ -9,7 +9,7 @@
 <body>
 
 <?php
-session_start();
+session_start();  //start sesji
 mb_internal_encoding('UTF-8');
 mb_http_output('UTF-8');
 mb_http_input('UTF-8');
@@ -26,9 +26,8 @@ $permission = $_SESSION['permission'];
 $menu = $_GET['menu'];
 
 
-require_once('config.php');
-require_once('functions.php');
-
+require_once('config.php'); // dołączenie pliku config.php
+require_once('functions.php'); // dołączenie pliku z funkcjami
 connect_db();
 
 ?>
@@ -37,12 +36,12 @@ connect_db();
 </div></a>
 <div id="menuLeft">
 <?
-if(isset($ses_login)){
+if(isset($ses_login)){ // jeśli użytkownik zalogowany to pokaż informację
 	print "Zalogowany jako: ".$ses_login;
 	print '<a href="?logout=1" class="menuLeftButtons"><img src="img/wyloguj2.png"/></a>';
-	menu();
+	menu(); //wyświetla menu
 } else {
-	login();
+	login(); //wyświetla formularz logowania
 }
 
 ?>
@@ -52,7 +51,7 @@ if(isset($ses_login)){
 </div>
 <div id="tabela">
 <?
-if(isset($ses_login)){
+if(isset($ses_login)){ //obsługa logowania, sprawdzenie poprawności danych logowania w bazie
 		$sql = "SELECT * FROM `user` WHERE `login` = '".$ses_login."' AND `password` = '".$ses_password."'";
 		$query = mysql_query($sql);
 		$ile_wynikow = mysql_num_rows($query);
@@ -65,8 +64,8 @@ if(isset($ses_login)){
 /*		if($ile_wynikow>0){
 			//print '<a href="?logout=1">Wyloguj</a> '.$ses_login;;
 */			print "<td>";
-			if($menu==1 or $menu==""){
-				sortuj();
+			if($menu==1 or $menu==""){  //wyświetlenie menu z książkami wg uprawnień
+				sortuj(); //wywołanie funkcji sortującej
 				$querysort = mysql_query($sqlsort);
 				print "<table border='1'><tr><td><a href='?menu=1&Get_SortBy=id&Get_SortUpDown=".$sort;
 				if(isset($_GET['s'])){
@@ -154,16 +153,16 @@ if(isset($ses_login)){
 				print "</tr>";
 				
 			}
-			} elseif($menu==2){
+			} elseif($menu==2){ //wyświetlenie menu z książkami
 				if($permission<2){
-					sortuj();
-					books();
+					sortuj(); //wywołanie funkcji sortującej
+					books(); // wywołanie funkcji pokazującej książki 
 				} else {
 					print "Brak uprawnień";
 				}
-			} elseif($menu==3){
+			} elseif($menu==3){ //wywołanie menu z użytkownikami
 				if($permission<2){
-					users();
+					users(); //wyświetlenie użytkowników
 				} else {
 					print "Brak uprawnień";
 				}
@@ -201,15 +200,15 @@ if(!isset($ses_login)){
 	print "</div>";
 }*/
 
-wyloguj();
+wyloguj(); //wywołanie funkcji obsługującej wylogowanie
 
-if(isset($_GET['wypozycz'])){
+if(isset($_GET['wypozycz'])){ //obsługa wypożyczeń
 	$sql = "UPDATE `biblioteka`.`books` SET `stan` = '0', `user_id` = '".$ses_user_id."' WHERE `books`.`id` = '".$_GET['wypozycz']."';";
 	mysql_query($sql);
 	header("Location: index.php?menu=".$_GET['menu']);
 }
 
-if(isset($submit)){
+if(isset($submit)){ //obsługa sesji logowania
 
 	$sql = "SELECT * FROM `user` WHERE `login` = '".$login."' AND `password` = '".$password."'";
 	$query = mysql_query($sql);
@@ -226,7 +225,6 @@ if(isset($submit)){
 		print $BadPass;
 	}
 }
-print $_SESSION['permission'];
 ?>
 
 </div>
