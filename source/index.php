@@ -47,7 +47,7 @@ if(isset($ses_login)){ // jeśli użytkownik zalogowany to pokaż informację
 ?>
 </div>
 <div id="menuTop">
-<img class="menuTop" src="img/informacje.png" /> <img class="menuTop" src="img/kontakt.png" /> <form class="menuTop" method="get"> <input type="text" name="s" /></form>
+<a href="?menu=5"><img class="menuTop" src="img/informacje.png" /></a> <a href="?menu=6"><img class="menuTop" src="img/kontakt.png" /></a> <form class="menuTop" method="get"> <input type="text" name="s" /></form>
 </div>
 <div id="tabela">
 <?
@@ -178,6 +178,10 @@ if(isset($ses_login)){ //obsługa logowania, sprawdzenie poprawności danych log
 				}
 				print "</table>";
 				
+			} elseif($menu==5){
+				print "informacje";
+			} elseif($menu==6){
+				print "kontakt";
 			}
 /*		}
 } else {
